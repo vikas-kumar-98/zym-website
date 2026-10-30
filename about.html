@@ -1,0 +1,2317 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#101010">
+    <title>FITZONE | Transform Your Body</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        /* =========================
+           GLOBAL STYLES
+        ========================= */
+
+        :root {
+            --orange: #ff5a1f;
+            --orange-hover: #e94b12;
+            --black: #101010;
+            --dark: #181818;
+            --dark-light: #222222;
+            --white: #ffffff;
+            --grey: #aaaaaa;
+            --border: rgba(255,255,255,0.10);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            width: 100%;
+            max-width: 100%;
+            scroll-behavior: smooth;
+            overflow-x: clip;
+        }
+
+        body {
+            width: 100%;
+            max-width: 100%;
+            font-family: 'Manrope', sans-serif;
+            background: var(--black);
+            color: var(--white);
+            overflow-x: clip;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font-family: inherit;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        .container {
+            width: min(1200px, calc(100% - 48px));
+            margin: auto;
+        }
+
+        .orange {
+            color: var(--orange);
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+            background: rgba(16,16,16,0.96);
+            border-bottom: 1px solid var(--border);
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .site-header.scrolled {
+            background: rgba(16,16,16,0.94);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+        }
+
+        .header-inner {
+            min-height: 82px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 25px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            flex-shrink: 0;
+        }
+
+        .logo-icon {
+            width: 39px;
+            height: 39px;
+            background: var(--orange);
+            color: white;
+            border-radius: 10px;
+            display: grid;
+            place-items: center;
+            font-size: 19px;
+        }
+
+        .desktop-nav {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .desktop-nav a {
+            color: #c4c4c4;
+            font-size: 13px;
+            font-weight: 700;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+
+        .desktop-nav a:hover,
+        .desktop-nav a.active {
+            color: var(--orange);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            padding: 13px 20px;
+            border: 1px solid transparent;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--orange);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--orange-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            border-color: var(--border);
+            color: white;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--orange);
+            color: var(--orange);
+        }
+
+        /* =========================
+           MOBILE MENU BUTTON
+        ========================= */
+
+        .menu-toggle {
+            display: none;
+            width: 44px;
+            height: 44px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--dark-light);
+            color: white;
+            font-size: 19px;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            position: relative;
+            z-index: 1004;
+        }
+
+        /* =========================
+           MOBILE NAVIGATION
+        ========================= */
+
+        .menu-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.75);
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .menu-backdrop.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: min(350px, 85vw);
+            height: 100vh;
+            height: 100dvh;
+            background: #171717;
+            border-left: 1px solid var(--border);
+            z-index: 1002;
+            padding: 95px 25px 35px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            transform: translateX(105%);
+            visibility: hidden;
+            transition: transform 0.35s ease, visibility 0.35s ease;
+        }
+
+        .mobile-nav.active {
+            transform: translateX(0);
+            visibility: visible;
+        }
+
+        .mobile-nav-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        .mobile-nav-title {
+            font-size: 12px;
+            color: var(--grey);
+            letter-spacing: 2px;
+            font-weight: 800;
+        }
+
+        .close-menu {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            width: 42px;
+            height: 42px;
+            background: var(--dark-light);
+            border: 1px solid var(--border);
+            color: white;
+            border-radius: 6px;
+            font-size: 18px;
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            touch-action: manipulation;
+        }
+
+        .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mobile-nav-links a {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 17px 4px;
+            border-bottom: 1px solid var(--border);
+            color: #eeeeee;
+            font-size: 14px;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .mobile-nav-links a i {
+            color: var(--orange);
+            font-size: 12px;
+        }
+
+        .mobile-nav-links a:hover,
+        .mobile-nav-links a.active {
+            color: var(--orange);
+            padding-left: 10px;
+        }
+
+        .mobile-nav-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .mobile-nav-actions .btn {
+            width: 100%;
+            min-height: 48px;
+        }
+
+        /* =========================
+           HERO SECTION
+        ========================= */
+
+        .hero {
+            min-height: 660px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background:
+                linear-gradient(90deg, rgba(10,10,10,0.98) 0%, rgba(10,10,10,0.83) 48%, rgba(10,10,10,0.35) 100%),
+                url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=2000&q=85') center/cover no-repeat;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 720px;
+            padding: 100px 0;
+        }
+
+        .hero-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--orange);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            margin-bottom: 25px;
+        }
+
+        .hero-label::before {
+            content: "";
+            width: 35px;
+            height: 2px;
+            background: var(--orange);
+        }
+
+        .hero h1 {
+            font-size: clamp(43px, 7vw, 82px);
+            font-weight: 800;
+            line-height: 1.08;
+            letter-spacing: -3px;
+            margin-bottom: 25px;
+            overflow-wrap: break-word;
+        }
+
+        .hero h1 span {
+            color: var(--orange);
+        }
+
+        .hero p {
+            color: #c3c3c3;
+            font-size: 15px;
+            line-height: 1.9;
+            max-width: 530px;
+            margin-bottom: 32px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .hero-buttons .btn {
+            min-height: 50px;
+            padding: 15px 24px;
+        }
+
+        .hero-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 45px;
+            margin-top: 65px;
+            padding-top: 28px;
+            border-top: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .stat h3 {
+            font-size: 27px;
+            font-weight: 800;
+        }
+
+        .stat p {
+            font-size: 11px;
+            color: var(--grey);
+            margin: 4px 0 0;
+            letter-spacing: 1px;
+        }
+
+        /* =========================
+           FEATURES
+        ========================= */
+
+        .features {
+            padding: 85px 0;
+            background: var(--dark);
+        }
+
+        .section-heading {
+            text-align: center;
+            max-width: 650px;
+            margin: 0 auto 45px;
+        }
+
+        .section-heading span {
+            color: var(--orange);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 3px;
+        }
+
+        .section-heading h2 {
+            font-size: clamp(30px, 5vw, 43px);
+            margin-top: 13px;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+        }
+
+        .section-heading p {
+            color: var(--grey);
+            line-height: 1.8;
+            font-size: 14px;
+            margin-top: 13px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .feature-card {
+            padding: 32px 25px;
+            background: #202020;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-7px);
+            border-color: var(--orange);
+        }
+
+        .feature-icon {
+            width: 52px;
+            height: 52px;
+            background: rgba(255,90,31,0.12);
+            color: var(--orange);
+            display: grid;
+            place-items: center;
+            font-size: 22px;
+            border-radius: 8px;
+            margin-bottom: 23px;
+        }
+
+        .feature-card h3 {
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            color: var(--grey);
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        /* =========================
+           CTA SECTION
+        ========================= */
+
+        .cta {
+            padding: 75px 0;
+            background: var(--orange);
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: clamp(28px, 5vw, 45px);
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .cta p {
+            color: rgba(255,255,255,0.85);
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .cta .btn {
+            background: var(--black);
+            color: white;
+        }
+
+        .cta .btn:hover {
+            background: white;
+            color: var(--black);
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .footer {
+            background: #0b0b0b;
+            padding: 70px 0 25px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+            gap: 40px;
+            padding-bottom: 50px;
+        }
+
+        .footer-about p {
+            color: var(--grey);
+            font-size: 13px;
+            line-height: 1.9;
+            margin-top: 20px;
+            max-width: 300px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 10px;
+            margin-top: 23px;
+        }
+
+        .social-links a {
+            width: 38px;
+            height: 38px;
+            background: #202020;
+            border-radius: 5px;
+            display: grid;
+            place-items: center;
+            color: white;
+            transition: 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--orange);
+        }
+
+        .footer-column h3 {
+            font-size: 14px;
+            margin-bottom: 23px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 14px;
+        }
+
+        .footer-column li a,
+        .footer-column li {
+            color: var(--grey);
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .footer-column li a:hover {
+            color: var(--orange);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            padding-top: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .footer-bottom p {
+            color: #777;
+            font-size: 11px;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-bottom-links a {
+            color: #888;
+            font-size: 11px;
+        }
+
+        .footer-bottom-links a:hover {
+            color: var(--orange);
+        }
+
+        /* =========================
+           BACK TO TOP
+        ========================= */
+
+        .back-to-top {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 45px;
+            height: 45px;
+            background: var(--orange);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            z-index: 900;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: 0.3s;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* =========================
+           RESPONSIVE DESIGN
+        ========================= */
+
+        @media (max-width: 1100px) {
+            .desktop-nav {
+                gap: 15px;
+            }
+
+            .desktop-nav a {
+                font-size: 12px;
+            }
+
+            .header-inner {
+                gap: 15px;
+            }
+
+            .header-actions .btn {
+                padding: 12px 14px;
+            }
+        }
+
+        @media (max-width: 950px) {
+            .desktop-nav,
+            .header-actions {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .feature-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: calc(100% - 36px);
+            }
+
+            .header-inner {
+                min-height: 70px;
+            }
+
+            .logo {
+                font-size: 22px;
+            }
+
+            .logo-icon {
+                width: 35px;
+                height: 35px;
+            }
+
+            .hero {
+                min-height: 620px;
+                background-position: 62% center;
+            }
+
+            .hero-content {
+                padding: 75px 0;
+            }
+
+            .hero h1 {
+                font-size: clamp(38px, 10vw, 55px);
+                letter-spacing: -1.8px;
+            }
+
+            .hero p {
+                font-size: 13px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .hero-buttons .btn {
+                width: 100%;
+            }
+
+            .hero-stats {
+                gap: 24px;
+                margin-top: 45px;
+            }
+
+            .stat h3 {
+                font-size: 22px;
+            }
+
+            .stat p {
+                font-size: 9px;
+            }
+
+            .features {
+                padding: 65px 0;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-card {
+                padding: 27px 22px;
+            }
+
+            .cta {
+                padding: 60px 20px;
+            }
+
+            .footer {
+                padding: 55px 0 25px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 35px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .footer-bottom-links {
+                flex-wrap: wrap;
+                gap: 14px;
+            }
+
+            .back-to-top {
+                bottom: 18px;
+                right: 18px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .container {
+                width: calc(100% - 28px);
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero-stats {
+                gap: 16px;
+            }
+
+            .stat h3 {
+                font-size: 19px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                transition-duration: 0.01ms !important;
+                animation-duration: 0.01ms !important;
+            }
+        }
+
+
+        /*Main section css  file goes here.................................*/
+    /* =====================================
+       FITZONE ABOUT PAGE
+    ===================================== */
+
+    .about-page {
+      --about-orange: #ff641f;
+      --about-orange-light: #ff8148;
+      --about-dark: #101010;
+      --about-card: #191919;
+      --about-white: #ffffff;
+      --about-muted: #a5a5a5;
+      --about-border: rgba(255,255,255,.1);
+      --about-container: 1200px;
+
+      background: var(--about-dark);
+      color: var(--about-white);
+      font-family: 'Inter', sans-serif;
+      overflow: hidden;
+    }
+
+    .about-page *,
+    .about-page *::before,
+    .about-page *::after {
+      box-sizing: border-box;
+    }
+
+    .about-page img {
+      display: block;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .about-container {
+      width: min(var(--about-container), calc(100% - 48px));
+      margin-inline: auto;
+    }
+
+    .about-section {
+      padding: 100px 0;
+    }
+
+    .about-section-heading {
+      max-width: 700px;
+      margin-bottom: 50px;
+    }
+
+    .about-eyebrow {
+      display: inline-block;
+      color: var(--about-orange);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .about-heading {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(42px, 6vw, 68px);
+      line-height: .98;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin: 0 0 20px;
+    }
+
+    .about-heading span {
+      color: var(--about-orange);
+    }
+
+    .about-description {
+      color: var(--about-muted);
+      font-size: 15px;
+      line-height: 1.9;
+      margin: 0;
+    }
+
+    .about-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 16px 25px;
+      background: var(--about-orange);
+      color: #fff;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: .3s ease;
+    }
+
+    .about-button:hover {
+      background: #fff;
+      color: #111;
+      transform: translateY(-3px);
+    }
+
+    /* HERO */
+
+    .about-hero {
+      min-height: 650px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      isolation: isolate;
+      background: #111;
+    }
+
+    .about-hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.94) 0%, rgba(0,0,0,.72) 48%, rgba(0,0,0,.2) 100%),
+        url("https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=2000&q=85") center/cover;
+    }
+
+    .about-hero-content {
+      max-width: var(--about-container);
+      width: calc(100% - 48px);
+      margin: auto;
+      padding: 120px 0;
+    }
+
+    .about-hero-label {
+      color: var(--about-orange);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 4px;
+      margin-bottom: 22px;
+    }
+
+    .about-hero-title {
+      max-width: 850px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(65px, 10vw, 120px);
+      line-height: .85;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin: 0 0 25px;
+    }
+
+    .about-hero-title span {
+      color: var(--about-orange);
+    }
+
+    .about-hero-text {
+      max-width: 550px;
+      color: #ccc;
+      font-size: 16px;
+      line-height: 1.8;
+      margin-bottom: 35px;
+    }
+
+    /* STORY */
+
+    .about-story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 75px;
+      align-items: center;
+    }
+
+    .about-story-images {
+      position: relative;
+      padding: 0 35px 35px 0;
+    }
+
+    .about-story-main-image {
+      height: 520px;
+      object-fit: cover;
+    }
+
+    .about-story-small-image {
+      position: absolute;
+      width: 48%;
+      height: 220px;
+      object-fit: cover;
+      right: 0;
+      bottom: 0;
+      border: 8px solid var(--about-dark);
+    }
+
+    .about-story-tag {
+      position: absolute;
+      left: 0;
+      bottom: 60px;
+      background: var(--about-orange);
+      padding: 18px 25px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 25px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .about-story-content .about-heading {
+      margin-bottom: 25px;
+    }
+
+    .about-story-content .about-description {
+      margin-bottom: 18px;
+    }
+
+    .about-story-points {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 30px;
+    }
+
+    .about-story-point {
+      border-left: 3px solid var(--about-orange);
+      padding-left: 15px;
+      color: #eee;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    /* MISSION & VISION */
+
+    .about-mission {
+      background: #171717;
+    }
+
+    .about-mission-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 25px;
+    }
+
+    .about-mission-card {
+      padding: 45px;
+      background: #202020;
+      border: 1px solid var(--about-border);
+      transition: .3s;
+    }
+
+    .about-mission-card:hover {
+      border-color: var(--about-orange);
+      transform: translateY(-5px);
+    }
+
+    .about-mission-icon {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,100,31,.12);
+      color: var(--about-orange);
+      font-size: 27px;
+      margin-bottom: 25px;
+    }
+
+    .about-mission-card h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 35px;
+      text-transform: uppercase;
+      margin: 0 0 15px;
+    }
+
+    .about-mission-card p {
+      color: var(--about-muted);
+      line-height: 1.8;
+      font-size: 14px;
+      margin: 0;
+    }
+
+    /* VALUES */
+
+    .about-values-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .about-value-card {
+      padding: 30px 25px;
+      background: var(--about-card);
+      border-bottom: 3px solid transparent;
+      transition: .3s;
+    }
+
+    .about-value-card:hover {
+      border-bottom-color: var(--about-orange);
+      transform: translateY(-6px);
+    }
+
+    .about-value-number {
+      color: var(--about-orange);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 42px;
+      font-weight: 800;
+      margin-bottom: 25px;
+    }
+
+    .about-value-card h3 {
+      font-size: 17px;
+      margin: 0 0 12px;
+    }
+
+    .about-value-card p {
+      color: var(--about-muted);
+      font-size: 13px;
+      line-height: 1.8;
+      margin: 0;
+    }
+
+    /* WHY FITZONE */
+
+    .about-difference {
+      background: #171717;
+    }
+
+    .about-difference-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 65px;
+      align-items: center;
+    }
+
+    .about-difference-image {
+      height: 560px;
+      object-fit: cover;
+    }
+
+    .about-feature-list {
+      display: grid;
+      gap: 25px;
+      margin-top: 35px;
+    }
+
+    .about-feature {
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+    }
+
+    .about-feature-icon {
+      flex-shrink: 0;
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      color: var(--about-orange);
+      background: rgba(255,100,31,.12);
+      font-size: 20px;
+    }
+
+    .about-feature h3 {
+      margin: 0 0 7px;
+      font-size: 16px;
+    }
+
+    .about-feature p {
+      margin: 0;
+      color: var(--about-muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    /* FACILITIES */
+
+    .about-facilities-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .about-facility-card {
+      position: relative;
+      min-height: 330px;
+      overflow: hidden;
+      background: #222;
+    }
+
+    .about-facility-card img {
+      height: 330px;
+      transition: transform .6s ease;
+    }
+
+    .about-facility-card:hover img {
+      transform: scale(1.08);
+    }
+
+    .about-facility-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 25px;
+      background: linear-gradient(transparent 20%, rgba(0,0,0,.9));
+    }
+
+    .about-facility-overlay h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 30px;
+      text-transform: uppercase;
+      margin: 0 0 8px;
+    }
+
+    .about-facility-overlay p {
+      color: #ccc;
+      font-size: 13px;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* ACHIEVEMENTS */
+
+    .about-achievements {
+      background: var(--about-orange);
+      color: #fff;
+    }
+
+    .about-achievements-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      text-align: center;
+    }
+
+    .about-achievement-number {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(45px, 6vw, 70px);
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+    .about-achievement-label {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    /* TEAM */
+
+    .about-team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .about-team-card {
+      background: var(--about-card);
+      overflow: hidden;
+    }
+
+    .about-team-card img {
+      height: 380px;
+      filter: grayscale(100%);
+      transition: .5s;
+    }
+
+    .about-team-card:hover img {
+      filter: grayscale(0);
+      transform: scale(1.03);
+    }
+
+    .about-team-info {
+      padding: 22px;
+    }
+
+    .about-team-info h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 28px;
+      text-transform: uppercase;
+      margin: 0 0 5px;
+    }
+
+    .about-team-info p {
+      color: var(--about-orange);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    /* CTA */
+
+    .about-cta {
+      position: relative;
+      text-align: center;
+      background:
+        linear-gradient(rgba(0,0,0,.82), rgba(0,0,0,.88)),
+        url("https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=1800&q=85") center/cover;
+    }
+
+    .about-cta-content {
+      max-width: 750px;
+      margin: auto;
+    }
+
+    .about-cta .about-heading {
+      margin-bottom: 20px;
+    }
+
+    .about-cta .about-description {
+      margin-bottom: 30px;
+    }
+
+    /* REVEAL ANIMATION */
+
+    .about-reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+
+    .about-reveal.about-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 1000px) {
+      .about-story-grid,
+      .about-difference-grid {
+        gap: 40px;
+      }
+
+      .about-values-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .about-facilities-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 700px) {
+      .about-section {
+        padding: 70px 0;
+      }
+
+      .about-container {
+        width: calc(100% - 36px);
+      }
+
+      .about-hero {
+        min-height: 570px;
+      }
+
+      .about-hero-content {
+        width: calc(100% - 36px);
+      }
+
+      .about-hero-title {
+        font-size: clamp(58px, 16vw, 85px);
+      }
+
+      .about-story-grid,
+      .about-difference-grid,
+      .about-mission-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about-story-images {
+        padding-right: 20px;
+      }
+
+      .about-story-main-image {
+        height: 400px;
+      }
+
+      .about-story-small-image {
+        height: 160px;
+      }
+
+      .about-difference-image {
+        height: 380px;
+      }
+
+      .about-facilities-grid,
+      .about-team-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about-achievements-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 35px 15px;
+      }
+
+      .about-mission-card {
+        padding: 30px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .about-values-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about-story-points {
+        grid-template-columns: 1fr;
+      }
+
+      .about-facility-card,
+      .about-facility-card img {
+        min-height: 280px;
+        height: 280px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .about-page *,
+      .about-page *::before,
+      .about-page *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+      }
+
+      .about-reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <header class="site-header" id="siteHeader">
+        <div class="container header-inner">
+
+            <a href="index.html" class="logo" aria-label="FITZONE Home">
+                <span class="logo-icon">
+                    <i class="fas fa-dumbbell"></i>
+                </span>
+                FIT<span class="orange">ZONE</span>
+            </a>
+
+            <nav class="desktop-nav" aria-label="Main navigation">
+                <a href="index.html" class="active">Home</a>
+                <a href="about.html">About Us</a>
+                <a href="programs.html">Programs</a>
+                <a href="trainers.html">Trainers</a>
+                <a href="membership.html">Membership</a>
+                <a href="classes.html">Classes</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+
+            <div class="header-actions">
+                <a href="login.html" class="btn btn-outline">Login</a>
+                <a href="membership.html" class="btn btn-primary">
+                    Join Now <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <button
+                class="menu-toggle"
+                id="menuToggle"
+                type="button"
+                aria-label="Open navigation menu"
+                aria-controls="mobileNav"
+                aria-expanded="false">
+                <i class="fas fa-bars"></i>
+            </button>
+
+        </div>
+    </header>
+
+    <!-- Mobile Backdrop -->
+    <div class="menu-backdrop" id="menuBackdrop"></div>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation" aria-hidden="true">
+
+        <button class="close-menu" id="closeMenu" type="button" aria-label="Close menu">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <div class="mobile-nav-header">
+            <span class="mobile-nav-title">EXPLORE FITZONE</span>
+        </div>
+
+        <div class="mobile-nav-links">
+            <a href="index.html" class="active">Home <i class="fas fa-arrow-right"></i></a>
+            <a href="about.html">About Us <i class="fas fa-arrow-right"></i></a>
+            <a href="programs.html">Programs <i class="fas fa-arrow-right"></i></a>
+            <a href="trainers.html">Trainers <i class="fas fa-arrow-right"></i></a>
+            <a href="membership.html">Membership <i class="fas fa-arrow-right"></i></a>
+            <a href="classes.html">Classes <i class="fas fa-arrow-right"></i></a>
+            <a href="contact.html">Contact <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="mobile-nav-actions">
+            <a href="login.html" class="btn btn-outline">Login</a>
+            <a href="membership.html" class="btn btn-primary">
+                Join Now <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+
+    </nav>
+
+  <!-- Existing shared header -->
+  <div data-about-include="components/header.html"></div>
+
+  <main class="about-page">
+
+    <!-- HERO -->
+    <section class="about-hero" id="about-hero-section">
+      <div class="about-hero-content about-reveal">
+        <div class="about-hero-label">WELCOME TO FITZONE</div>
+        <h1 class="about-hero-title">
+          WE BUILD<br>
+          <span>STRONGER</span><br>
+          YOU.
+        </h1>
+        <p class="about-hero-text">
+          More than a gym. A community built around strength, discipline,
+          confidence and the determination to become your best self.
+        </p>
+        <a href="#about-story-section" class="about-button">
+          DISCOVER OUR STORY <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- STORY -->
+    <section class="about-section" id="about-story-section">
+      <div class="about-container about-story-grid">
+
+        <div class="about-story-images about-reveal">
+          <img class="about-story-main-image"
+               src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1000&q=85"
+               alt="Modern gym training area" loading="lazy">
+
+          <img class="about-story-small-image"
+               src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=600&q=85"
+               alt="Athlete strength training" loading="lazy">
+
+          <div class="about-story-tag">STRONGER EVERY DAY</div>
+        </div>
+
+        <div class="about-story-content about-reveal">
+          <span class="about-eyebrow">OUR STORY</span>
+          <h2 class="about-heading">
+            BUILT ON<br><span>STRENGTH.</span><br>DRIVEN BY YOU.
+          </h2>
+
+          <p class="about-description">
+            FITZONE was created with one simple belief: everyone deserves
+            the opportunity to become stronger, healthier and more confident.
+          </p>
+
+          <p class="about-description">
+            We bring together modern equipment, professional guidance and
+            an energetic training environment to make every workout count.
+          </p>
+
+          <p class="about-description">
+            Whether you are starting your fitness journey or pushing toward
+            your next personal record, FITZONE is here to support your progress.
+          </p>
+
+          <div class="about-story-points">
+            <div class="about-story-point">Modern Equipment</div>
+            <div class="about-story-point">Expert Guidance</div>
+            <div class="about-story-point">Supportive Community</div>
+            <div class="about-story-point">Results-Focused Training</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- MISSION AND VISION -->
+    <section class="about-section about-mission" id="about-mission-section">
+      <div class="about-container">
+
+        <div class="about-section-heading about-reveal">
+          <span class="about-eyebrow">OUR PURPOSE</span>
+          <h2 class="about-heading">WHAT <span>DRIVES US</span></h2>
+          <p class="about-description">
+            Every great transformation begins with a clear purpose.
+          </p>
+        </div>
+
+        <div class="about-mission-grid">
+          <article class="about-mission-card about-reveal">
+            <div class="about-mission-icon" aria-hidden="true">🎯</div>
+            <h3>OUR MISSION</h3>
+            <p>
+              To make quality fitness accessible through expert coaching,
+              modern facilities and a motivating environment that helps
+              every member achieve meaningful results.
+            </p>
+          </article>
+
+          <article class="about-mission-card about-reveal">
+            <div class="about-mission-icon" aria-hidden="true">🚀</div>
+            <h3>OUR VISION</h3>
+            <p>
+              To build a fitness community where healthy habits, personal
+              growth and consistency become a way of life.
+            </p>
+          </article>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- VALUES -->
+    <section class="about-section" id="about-values-section">
+      <div class="about-container">
+
+        <div class="about-section-heading about-reveal">
+          <span class="about-eyebrow">WHAT WE BELIEVE</span>
+          <h2 class="about-heading">OUR CORE <span>VALUES</span></h2>
+          <p class="about-description">
+            The principles behind every workout, every interaction and
+            every fitness achievement.
+          </p>
+        </div>
+
+        <div class="about-values-grid">
+
+          <article class="about-value-card about-reveal">
+            <div class="about-value-number">01</div>
+            <h3>DISCIPLINE</h3>
+            <p>Small consistent efforts create powerful long-term results.</p>
+          </article>
+
+          <article class="about-value-card about-reveal">
+            <div class="about-value-number">02</div>
+            <h3>COMMITMENT</h3>
+            <p>We believe in showing up, staying focused and moving forward.</p>
+          </article>
+
+          <article class="about-value-card about-reveal">
+            <div class="about-value-number">03</div>
+            <h3>COMMUNITY</h3>
+            <p>We grow stronger together by supporting every member.</p>
+          </article>
+
+          <article class="about-value-card about-reveal">
+            <div class="about-value-number">04</div>
+            <h3>PROGRESS</h3>
+            <p>We celebrate improvement, effort and every milestone.</p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY FITZONE -->
+    <section class="about-section about-difference" id="about-difference-section">
+      <div class="about-container about-difference-grid">
+
+        <div class="about-reveal">
+          <span class="about-eyebrow">THE FITZONE DIFFERENCE</span>
+          <h2 class="about-heading">
+            YOUR GOALS.<br>OUR <span>EXPERTISE.</span>
+          </h2>
+          <p class="about-description">
+            Your fitness journey deserves more than just equipment.
+            It deserves an environment designed to help you succeed.
+          </p>
+
+          <div class="about-feature-list">
+
+            <div class="about-feature">
+              <div class="about-feature-icon" aria-hidden="true">✓</div>
+              <div>
+                <h3>Professional Trainers</h3>
+                <p>Get guidance, motivation and support throughout your journey.</p>
+              </div>
+            </div>
+
+            <div class="about-feature">
+              <div class="about-feature-icon" aria-hidden="true">✓</div>
+              <div>
+                <h3>Modern Equipment</h3>
+                <p>Train with equipment designed for effective workouts.</p>
+              </div>
+            </div>
+
+            <div class="about-feature">
+              <div class="about-feature-icon" aria-hidden="true">✓</div>
+              <div>
+                <h3>Personalized Training</h3>
+                <p>Work toward goals that match your individual fitness needs.</p>
+              </div>
+            </div>
+
+            <div class="about-feature">
+              <div class="about-feature-icon" aria-hidden="true">✓</div>
+              <div>
+                <h3>Motivating Environment</h3>
+                <p>Stay inspired in a positive and energetic fitness community.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="about-reveal">
+          <img class="about-difference-image"
+               src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=1000&q=85"
+               alt="FITZONE style modern fitness facility" loading="lazy">
+        </div>
+
+      </div>
+    </section>
+
+    <!-- FACILITIES -->
+    <section class="about-section" id="about-facilities-section">
+      <div class="about-container">
+
+        <div class="about-section-heading about-reveal">
+          <span class="about-eyebrow">TRAIN YOUR WAY</span>
+          <h2 class="about-heading">OUR <span>FACILITIES</span></h2>
+          <p class="about-description">
+            Everything you need to challenge yourself and keep progressing.
+          </p>
+        </div>
+
+        <div class="about-facilities-grid">
+
+          <article class="about-facility-card about-reveal">
+            <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=800&q=85"
+                 alt="Strength training equipment" loading="lazy">
+            <div class="about-facility-overlay">
+              <h3>STRENGTH ZONE</h3>
+              <p>Build strength with a range of resistance training equipment.</p>
+            </div>
+          </article>
+
+          <article class="about-facility-card about-reveal">
+            <img src="https://images.unsplash.com/photo-1534258936925-c58bed479fcb?auto=format&fit=crop&w=800&q=85"
+                 alt="Cardio workout area" loading="lazy">
+            <div class="about-facility-overlay">
+              <h3>CARDIO ZONE</h3>
+              <p>Improve endurance and keep your energy moving.</p>
+            </div>
+          </article>
+
+          <article class="about-facility-card about-reveal">
+            <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=800&q=85"
+                 alt="Functional fitness training" loading="lazy">
+            <div class="about-facility-overlay">
+              <h3>FUNCTIONAL TRAINING</h3>
+              <p>Build balance, mobility and everyday strength.</p>
+            </div>
+          </article>
+
+          <article class="about-facility-card about-reveal">
+            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=800&q=85"
+                 alt="Personal fitness coaching" loading="lazy">
+            <div class="about-facility-overlay">
+              <h3>PERSONAL TRAINING</h3>
+              <p>Get focused support from experienced fitness professionals.</p>
+            </div>
+          </article>
+
+          <article class="about-facility-card about-reveal">
+            <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=800&q=85"
+                 alt="Fitness workout session" loading="lazy">
+            <div class="about-facility-overlay">
+              <h3>GROUP WORKOUTS</h3>
+              <p>Enjoy energetic training sessions with the community.</p>
+            </div>
+          </article>
+
+          <article class="about-facility-card about-reveal">
+            <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=800&q=85"
+                 alt="Modern gym interior" loading="lazy">
+            <div class="about-facility-overlay">
+              <h3>PREMIUM SPACE</h3>
+              <p>Enjoy a clean, comfortable and motivating workout environment.</p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ACHIEVEMENTS -->
+    <section class="about-section about-achievements" id="about-achievements-section">
+      <div class="about-container about-achievements-grid">
+
+        <div class="about-reveal">
+          <div class="about-achievement-number" data-about-count="1200">0</div>
+          <div class="about-achievement-label">Fitness Members</div>
+        </div>
+
+        <div class="about-reveal">
+          <div class="about-achievement-number" data-about-count="15">0</div>
+          <div class="about-achievement-label">Expert Trainers</div>
+        </div>
+
+        <div class="about-reveal">
+          <div class="about-achievement-number" data-about-count="25">0</div>
+          <div class="about-achievement-label">Training Programs</div>
+        </div>
+
+        <div class="about-reveal">
+          <div class="about-achievement-number" data-about-count="98">0</div>
+          <div class="about-achievement-label">Member Satisfaction</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TEAM -->
+    <section class="about-section" id="about-team-section">
+      <div class="about-container">
+
+        <div class="about-section-heading about-reveal">
+          <span class="about-eyebrow">MEET THE PEOPLE</span>
+          <h2 class="about-heading">EXPERTS BEHIND <span>YOUR SUCCESS</span></h2>
+          <p class="about-description">
+            Great results start with the right support and guidance.
+          </p>
+        </div>
+
+        <div class="about-team-grid">
+
+          <article class="about-team-card about-reveal">
+            <img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?auto=format&fit=crop&w=800&q=85"
+                 alt="Fitness trainer portrait" loading="lazy">
+            <div class="about-team-info">
+              <h3>TRAINER NAME</h3>
+              <p>Head Fitness Coach</p>
+            </div>
+          </article>
+
+          <article class="about-team-card about-reveal">
+            <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=85"
+                 alt="Fitness professional" loading="lazy">
+            <div class="about-team-info">
+              <h3>TRAINER NAME</h3>
+              <p>Strength Specialist</p>
+            </div>
+          </article>
+
+          <article class="about-team-card about-reveal">
+            <img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?auto=format&fit=crop&w=800&q=85"
+                 alt="Personal training professional" loading="lazy">
+            <div class="about-team-info">
+              <h3>TRAINER NAME</h3>
+              <p>Personal Fitness Trainer</p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="about-section about-cta" id="about-cta-section">
+      <div class="about-container about-cta-content about-reveal">
+        <span class="about-eyebrow">YOUR JOURNEY STARTS HERE</span>
+        <h2 class="about-heading">
+          STOP WAITING.<br><span>START STRONG.</span>
+        </h2>
+        <p class="about-description">
+          Take the first step toward a stronger, healthier and more confident you.
+          Join the FITZONE community today.
+        </p>
+        <a href="membership.html" class="about-button">
+          EXPLORE MEMBERSHIPS <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Existing shared footer -->
+  <div data-about-include="components/footer.html"></div>
+
+
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer class="footer" id="contact">
+        <div class="container">
+
+            <div class="footer-grid">
+
+                <div class="footer-about">
+                    <a href="index.html" class="logo">
+                        <span class="logo-icon">
+                            <i class="fas fa-dumbbell"></i>
+                        </span>
+                        FIT<span class="orange">ZONE</span>
+                    </a>
+
+                    <p>
+                        More than a gym. FITZONE is a community built around
+                        strength, discipline, confidence, and a healthier lifestyle.
+                    </p>
+
+                    <div class="social-links">
+                        <a href="https://facebook.com" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://instagram.com" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://youtube.com" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h3>QUICK LINKS</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="programs.html">Programs</a></li>
+                        <li><a href="trainers.html">Our Trainers</a></li>
+                        <li><a href="membership.html">Membership</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>OUR PROGRAMS</h3>
+                    <ul>
+                        <li><a href="programs.html#strength">Strength Training</a></li>
+                        <li><a href="programs.html#weight-loss">Weight Loss</a></li>
+                        <li><a href="programs.html#cardio">Cardio Training</a></li>
+                        <li><a href="programs.html#personal">Personal Training</a></li>
+                        <li><a href="programs.html#group">Group Classes</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>CONTACT US</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt orange"></i> Noida, Uttar Pradesh, India</li>
+                        <li><i class="fas fa-phone orange"></i> +91 98765 43210</li>
+                        <li><i class="fas fa-envelope orange"></i> info@fitzone.com</li>
+                        <li><i class="fas fa-clock orange"></i> Mon - Sat: 6 AM - 10 PM</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <p>
+                    &copy; <span id="copyrightYear"></span> FITZONE.
+                    All Rights Reserved.
+                </p>
+
+                <div class="footer-bottom-links">
+                    <a href="privacy.html">Privacy Policy</a>
+                    <a href="terms.html">Terms & Conditions</a>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- Back To Top -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top" type="button">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const menuToggle = document.getElementById("menuToggle");
+            const mobileNav = document.getElementById("mobileNav");
+            const menuBackdrop = document.getElementById("menuBackdrop");
+            const closeMenuButton = document.getElementById("closeMenu");
+            const siteHeader = document.getElementById("siteHeader");
+            const backToTop = document.getElementById("backToTop");
+
+            const mobileLinks = mobileNav.querySelectorAll("a");
+            const allNavigationLinks = document.querySelectorAll(
+                ".desktop-nav a, .mobile-nav-links a"
+            );
+
+            let lastFocusedElement = null;
+
+            /* =========================
+               OPEN MOBILE MENU
+            ========================= */
+
+            function openMenu() {
+                lastFocusedElement = document.activeElement;
+
+                mobileNav.classList.add("active");
+                menuBackdrop.classList.add("active");
+
+                menuToggle.setAttribute("aria-expanded", "true");
+                mobileNav.setAttribute("aria-hidden", "false");
+
+                document.body.style.overflow = "hidden";
+
+                closeMenuButton.focus();
+            }
+
+            /* =========================
+               CLOSE MOBILE MENU
+            ========================= */
+
+            function closeMenu() {
+
+                mobileNav.classList.remove("active");
+                menuBackdrop.classList.remove("active");
+
+                menuToggle.setAttribute("aria-expanded", "false");
+                mobileNav.setAttribute("aria-hidden", "true");
+
+                document.body.style.overflow = "";
+
+                if (lastFocusedElement) {
+                    lastFocusedElement.focus();
+                }
+            }
+
+            /* =========================
+               MENU BUTTON EVENTS
+            ========================= */
+
+            menuToggle.addEventListener("click", function () {
+
+                const isOpen = mobileNav.classList.contains("active");
+
+                if (isOpen) {
+                    closeMenu();
+                } else {
+                    openMenu();
+                }
+
+            });
+
+            closeMenuButton.addEventListener("click", closeMenu);
+
+            menuBackdrop.addEventListener("click", closeMenu);
+
+            /* Close after clicking navigation links */
+
+            mobileLinks.forEach(function (link) {
+                link.addEventListener("click", function () {
+                    closeMenu();
+                });
+            });
+
+            /* Close menu with Escape */
+
+            document.addEventListener("keydown", function (event) {
+
+                if (event.key === "Escape" &&
+                    mobileNav.classList.contains("active")) {
+                    closeMenu();
+                }
+
+                /* Keep keyboard focus inside open menu */
+
+                if (event.key === "Tab" &&
+                    mobileNav.classList.contains("active")) {
+
+                    const focusableElements = mobileNav.querySelectorAll(
+                        'a[href], button:not([disabled])'
+                    );
+
+                    const firstElement = focusableElements[0];
+                    const lastElement = focusableElements[focusableElements.length - 1];
+
+                    if (event.shiftKey &&
+                        document.activeElement === firstElement) {
+                        event.preventDefault();
+                        lastElement.focus();
+                    } else if (!event.shiftKey &&
+                        document.activeElement === lastElement) {
+                        event.preventDefault();
+                        firstElement.focus();
+                    }
+                }
+
+            });
+
+            /* Close menu if resized to desktop */
+
+            window.addEventListener("resize", function () {
+                if (window.innerWidth > 950 &&
+                    mobileNav.classList.contains("active")) {
+                    closeMenu();
+                }
+            });
+
+            /* =========================
+               STICKY HEADER
+            ========================= */
+
+            function handleScroll() {
+
+                if (window.scrollY > 50) {
+                    siteHeader.classList.add("scrolled");
+                    backToTop.classList.add("show");
+                } else {
+                    siteHeader.classList.remove("scrolled");
+                    backToTop.classList.remove("show");
+                }
+
+            }
+
+            window.addEventListener("scroll", handleScroll, {
+                passive: true
+            });
+
+            handleScroll();
+
+            /* =========================
+               BACK TO TOP
+            ========================= */
+
+            backToTop.addEventListener("click", function () {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            });
+
+            /* =========================
+               ACTIVE NAVIGATION
+            ========================= */
+
+            allNavigationLinks.forEach(function (link) {
+
+                link.addEventListener("click", function () {
+
+                    const target = link.getAttribute("href");
+
+                    if (!target || !target.startsWith("#")) return;
+
+                    allNavigationLinks.forEach(function (item) {
+                        item.classList.remove("active");
+                    });
+
+                    document.querySelectorAll(
+                        '.desktop-nav a[href="' + target + '"], ' +
+                        '.mobile-nav-links a[href="' + target + '"]'
+                    ).forEach(function (item) {
+                        item.classList.add("active");
+                    });
+
+                });
+
+            });
+
+            /* =========================
+               COPYRIGHT YEAR
+            ========================= */
+
+            document.getElementById("copyrightYear").textContent =
+                new Date().getFullYear();
+
+        });
+    </script>
+
+  <script>
+    /* =====================================
+       FITZONE ABOUT PAGE JAVASCRIPT
+    ===================================== */
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+      // Load existing shared header and footer
+      document.querySelectorAll("[data-about-include]").forEach(async function (element) {
+        const file = element.getAttribute("data-about-include");
+
+        try {
+          const response = await fetch(file);
+
+          if (!response.ok) {
+            throw new Error("Unable to load " + file);
+          }
+
+          element.innerHTML = await response.text();
+        } catch (error) {
+          console.error(error);
+        }
+      });
+
+      // Scroll reveal animation
+      const revealElements = document.querySelectorAll(".about-reveal");
+
+      if ("IntersectionObserver" in window) {
+        const revealObserver = new IntersectionObserver(function (entries, observer) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("about-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.12
+        });
+
+        revealElements.forEach(function (element) {
+          revealObserver.observe(element);
+        });
+      } else {
+        revealElements.forEach(function (element) {
+          element.classList.add("about-visible");
+        });
+      }
+
+      // Animated achievement counters
+      const counters = document.querySelectorAll("[data-about-count]");
+
+      function animateCounter(element) {
+        const target = Number(element.getAttribute("data-about-count"));
+        const duration = 1600;
+        const startTime = performance.now();
+
+        function updateCounter(currentTime) {
+          const progress = Math.min((currentTime - startTime) / duration, 1);
+          const easedProgress = 1 - Math.pow(1 - progress, 3);
+          const currentValue = Math.floor(target * easedProgress);
+
+          element.textContent = currentValue.toLocaleString("en-IN") +
+            (target === 98 ? "%" : "+");
+
+          if (progress < 1) {
+            requestAnimationFrame(updateCounter);
+          }
+        }
+
+        requestAnimationFrame(updateCounter);
+      }
+
+      if ("IntersectionObserver" in window) {
+        const counterObserver = new IntersectionObserver(function (entries, observer) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              animateCounter(entry.target);
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.5
+        });
+
+        counters.forEach(function (counter) {
+          counterObserver.observe(counter);
+        });
+      } else {
+        counters.forEach(function (counter) {
+          animateCounter(counter);
+        });
+      }
+
+      // Smooth scrolling for internal links
+      document.querySelectorAll('.about-page a[href^="#"]').forEach(function (link) {
+        link.addEventListener("click", function (event) {
+          const targetId = this.getAttribute("href");
+          const target = document.querySelector(targetId);
+
+          if (target) {
+            event.preventDefault();
+            target.scrollIntoView({
+              behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+                ? "auto"
+                : "smooth"
+            });
+          }
+        });
+      });
+
+    });
+  </script>
+
+
+
+</body>
+</html>
